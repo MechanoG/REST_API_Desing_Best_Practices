@@ -1,5 +1,5 @@
 const DB = require("./db.json");
-const utils = require("./utils");
+const {saveToDatabase} = require("./utils");
 
 const getAllWorkouts = () => {
     return DB.workouts;
@@ -12,7 +12,7 @@ const createNewWorkout = (newWorkout) =>{
         return;
     }
     DB.workouts.push(newWorkout);
-    utils.saveToDatabase(DB);
+    saveToDatabase(DB);
     return newWorkout;
 
 };
