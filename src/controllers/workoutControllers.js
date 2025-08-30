@@ -1,6 +1,27 @@
 const workoutService = require("../services/workoutService");
 
 const getAllWorkouts = (req, res) =>{
+    const {
+        body,
+        params : {workoutId},
+    } = req;
+
+    if (!workoutId){
+        res
+            .status(100)
+            .send({
+                status:400,
+                data : {error:"Parameter `:workoutId` can not be empty"},
+            });
+    }
+    try{
+        const updatedWorkout = workoutService.updateOneWorkout(workoutId, body);
+    }catch(error){
+        res
+            .status(error?.status || 500)
+            .send({status: "FAILED", data: {error: error?.message || error}});
+    }
+
     const allWorkouts = workoutService.getAllWorkouts();
     res.send({ status : "OK", data: allWorkouts});
 }
@@ -37,9 +58,7 @@ const createNewWorkout = (req, res) =>{
         exercises: body.exercises,
         trainersTips: body.trainersTips,
     }
-    console.log("Controller creating workout...")
     const createdWorkout = workoutService.createNewWorkout(newWorkout);
-    
     res.status(201).send({status: "OK", data: createdWorkout});
 }
 

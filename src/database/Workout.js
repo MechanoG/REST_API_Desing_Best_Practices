@@ -19,7 +19,6 @@ const createNewWorkout = (newWorkout) =>{
         saveToDatabase(DB);
         return newWorkout;
     } catch (error){
-        console.log(error.message)
         throw {status:error?.status || 500, message: error?.message || error};
     }
 };
