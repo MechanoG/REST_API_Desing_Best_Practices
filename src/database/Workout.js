@@ -6,18 +6,25 @@ const getAllWorkouts = () => {
 }
 
 const createNewWorkout = (newWorkout) =>{
-    const isAlreadyAdded = 
-        DB.workouts.findIndex((workout)=> workout.name === newWorkout.name) > -1;
-    if(isAlreadyAdded){
-        return;
+    try{
+        const isAlreadyAdded = 
+            DB.workouts.findIndex((workout)=> workout.name === newWorkout.name) > -1;
+        if(isAlreadyAdded){
+            throw{
+                status: 400,
+                massage: `Workout with the name ${newWorkout} already exist.`
+            };
+        }
+        DB.workouts.push(newWorkout);
+        saveToDatabase(DB);
+        return newWorkout;
+    } catch (error){
+        console.log(error.message)
+        throw {status:error?.status || 500, message: error?.message || error};
     }
-    DB.workouts.push(newWorkout);
-    saveToDatabase(DB);
-    return newWorkout;
-
 };
 
 module.exports = {
     getAllWorkouts,
-    createNewWorkout
+    createNewWorkout,
 };
