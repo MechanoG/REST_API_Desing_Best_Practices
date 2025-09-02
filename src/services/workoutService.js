@@ -34,8 +34,8 @@ const updateOneWorkout = (workoutId, changes) =>{
     return updateOneWorkout;
 }
 
-const deleteOneWorkout = () =>{
-    return;
+const deleteOneWorkout = (workoutId) =>{
+    Workout.deleteOneWorkout(workoutId);
 }
 
 module.exports = {
