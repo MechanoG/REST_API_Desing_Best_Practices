@@ -91,7 +91,10 @@ const deleteOneWorkout = (req, res) =>{
     } = req;
 
     if(!workoutId){
-        return
+        res.status(400)
+        .send({status : "FAILED",
+            data : {error: "Parameter ''"}
+         });
     }
     workoutService.deleteOneWorkout(workoutId);
     res.status(204).send({status:"OK"});
