@@ -93,12 +93,19 @@ const deleteOneWorkout = (req, res) =>{
     if(!workoutId){
         res.status(400)
         .send({status : "FAILED",
-            data : {error: "Parameter ''"}
+            data : {error: "Parameter ':workoutId' can not be empty"},
          });
     }
-    workoutService.deleteOneWorkout(workoutId);
-    res.status(204).send({status:"OK"});
-}
+
+    try{
+        workoutService.deleteOneWorkout(workoutId);
+        res.status(204).send({status:"OK"});
+    }catch(error){
+        res
+        .status(error?.status || error)
+        .send({status: "FAILED", data : { error: error?.message || error}});
+    }
+};
 
 module.exports = {
     getAllWorkouts,
