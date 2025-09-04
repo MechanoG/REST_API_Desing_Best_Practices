@@ -46,15 +46,16 @@ const createNewWorkout = (newWorkout) =>{
 const updateOneWorkout = (workoutId, changes) => {
     try{
         const isAlreadyAdded = 
-                DB.workouts.findIndex((workout)=> workout.name === changes.name) > -1;
-            if(isAlreadyAdded){
-                throw{
-                    status: 400,
-                    massage: `Workout with the name ${newWorkout} already exist.`
-                };
-            }
-        
-        const indexForUpdate = DB.workouts.findIndex((workout) => workout.id === workoutId);
+            DB.workouts.findIndex((workout)=> workout.name === changes.name) > -1;
+        if (isAlreadyAdded) {
+            throw{
+                status: 400,
+                massage: `Workout with the name ${newWorkout} already exist.`
+            };
+        }
+        const indexForUpdate = DB.workouts.findIndex(
+            (workout) => workout.id === workoutId
+        );
         if(indexForUpdate === -1){
             throw{
                 status: 400,
@@ -79,24 +80,22 @@ const updateOneWorkout = (workoutId, changes) => {
 
 const deleteOneWorkout = (workoutId) =>{
     try{
-    const indexForDeletion = DB.workouts.findIndex((workout)=>{
-        workout.id === workoutId;
-    });
-
-    if (indexForDeletion === -1){
-        throw {
-            status: 400,
-            mesagge: `Cant find a workout with the id '${workoutId}'`,
+        const indexForDeletion = DB.workouts.findIndex(
+            (workout)=> workout.id === workoutId
+        );
+        if (indexForDeletion === -1){
+            throw {
+                status: 400,
+                mesagge: `Cant find a workout with the id '${workoutId}'`,
+            }
         }
-    }
-
-    DB.workouts.splice(indexForDeletion, 1);
-    saveToDatabase(DB);
+        DB.workouts.splice(indexForDeletion, 1);
+        saveToDatabase(DB);
     }catch(error){
         throw{
             status : error?.status || 500,
-            mesagge : error?.mesagge || error,
-        };
+            mesaage : error?.message || error,
+        }
     }
 };
 
