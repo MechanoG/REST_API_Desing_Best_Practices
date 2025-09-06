@@ -1,6 +1,6 @@
 const express = require("express");
 const workoutController = require("../../controllers/workoutControllers");
-const recordController = require("../../controllers/recordController");
+const recordController = require("../../controllers/recordControllers");
 
 const router = express.Router();
 
