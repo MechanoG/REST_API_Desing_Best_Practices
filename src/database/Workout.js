@@ -9,6 +9,7 @@ const getAllWorkouts = (filterParams) => {
                 workout.mode.toLowerCase().includes(filterParams.mode)
             );
         }
+        return workouts;
     }catch(error){
         throw {status: 500, message: error};
     }
