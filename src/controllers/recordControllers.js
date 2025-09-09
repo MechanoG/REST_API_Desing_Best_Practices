@@ -15,12 +15,7 @@ const getRecordForWorkout = (req, res) => {
     }
     try{
         
-        console.log("Data obteniendo de servies");
         const record = recordService.getRecordForWorkout(workoutId);
-
-        console.log("Data services");
-        console.log(`${record}`);
-
         res.send({status: "OK", data : record});
     }catch(error){
         throw{

@@ -9,7 +9,7 @@ const cache = apicache.middleware;
 
 //**ADD**//
 
-router.get("/", cache("2 minutes"), workoutController.getAllWorkouts);
+router.get("/", workoutController.getAllWorkouts);
 
 router.get("/:workoutId", workoutController.getOneWorkout);
 
