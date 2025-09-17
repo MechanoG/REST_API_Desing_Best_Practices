@@ -5,10 +5,16 @@ const getAllWorkouts = (filterParams) => {
     try{
         let workouts = DB.workouts;
         if (filterParams.mode){
+            console.log(filterParams.mode)
             return DB.workouts.filter((workout) => 
                 workout.mode.toLowerCase().includes(filterParams.mode)
             );
         }
+        if (filterParams.equipment){
+            console.log(filterParams.equipment)
+            return DB.workouts.filter((workout) => 
+                workout.equipment.toLowerCase().includes(filterParams.equipment));
+        } 
         return workouts;
     }catch(error){
         throw {status: 500, message: error};
