@@ -4,7 +4,7 @@ const {saveToDatabase} = require("./utils");
 const getAllWorkouts = (filterParams) => {
     try{
         let workouts = DB.workouts;
-        
+
         if (filterParams.mode){
             return DB.workouts.filter((workout) => 
                 workout.mode.toLowerCase().includes(filterParams.mode)
@@ -15,8 +15,16 @@ const getAllWorkouts = (filterParams) => {
             return DB.workouts.filter((workout) => 
                 workout.equipment.find( equipment => equipment === filterParams.equipment));
         }
-        
+
+        if (filterParams.length){
+            let awnser = [];
+            for (i=0; i < filterParams.length; i++){
+                awnser.push(DB.workouts[i]);
+            }
+            return awnser;
+        }
         return workouts;
+
     }catch(error){
         throw {status: 500, message: error};
     }
