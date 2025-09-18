@@ -3,8 +3,10 @@ const {v4: uuid} = require("uuid");
 
 const getAllWorkouts = (filterParams) =>{
     try{
+
         const allWorkouts = Workout.getAllWorkouts(filterParams);
         return allWorkouts;
+
     }catch(error){
         throw error;
     }    
