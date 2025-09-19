@@ -3,6 +3,22 @@ const {saveToDatabase} = require("./utils");
 
 const getAllWorkouts = (filterParams) => {
     try{
+        if(filterParams.page){
+            
+            const workouts = [];
+            const limit = 5;
+            const start = (filterParams.page -1) * limit;
+            
+            for (let i = start; i < (start+limit); i++ ){
+                workouts.push(DB.workouts[i]);    
+            }
+            
+            return workouts;
+            
+        }
+
+        
+        ///Jala todos los workouts
         let workouts = DB.workouts;
 
         if (filterParams.mode){
