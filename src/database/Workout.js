@@ -3,6 +3,7 @@ const {saveToDatabase} = require("./utils");
 
 const getAllWorkouts = (filterParams) => {
     try{
+
         if(filterParams.page){
             
             const workouts = [];
@@ -19,9 +20,59 @@ const getAllWorkouts = (filterParams) => {
             return workouts;
         }
 
+        if(filterParams.sort && filterParams.length){
+            let workouts = DB.workouts;
+            let awnser = [];
+            workouts.sort(function(a,b){
+                if(new Date(a.updatedAt.split(',')[0]) > new Date(b.updatedAt.split(',')[0])){
+                    return -1;
+                } else if (new Date(a.updatedAt.split(',')[0]) == new Date(b.updatedAt.split(',')[0])){
+                    return 0;
+                }else{
+                    return 1;
+                }
+            })
+            
+            for(let i=0; i <5; i++){
+                awnser.push(workouts[i]);
+            }
+            return awnser;
+        } 
+
+        if(filterParams.sort){
+
+            let workouts = DB.workouts;
+
+            if(filterParams.sort == `-createdAt`){
+
+                workouts.sort(function(a,b){
+                if(new Date(a.createdAt.split(',')[0]) > new Date(b.createdAt.split(',')[0])){
+                    return -1;
+                } else if (new Date(a.createdAt.split(',')[0]) == new Date(b.createdAt.split(',')[0])){
+                    return 0;
+                }else{
+                    return 1;
+                }
+                })
+                
+            }else if(filterParams.sort == `createdAt`){
+
+                workouts.sort(function(a,b){
+                if(new Date(a.createdAt.split(',')[0]) < new Date(b.createdAt.split(',')[0])){
+                    return -1;
+                } else if (new Date(a.createdAt.split(',')[0]) == new Date(b.createdAt.split(',')[0])){
+                    return 0;
+                }else{
+                    return 1;
+                }
+                })
+
+            }
+            //console.log( new Date(DB.workouts[0].updatedAt.split(',')[0]) > new Date(DB.workouts[1].updatedAt.split(',')[0]) );
+            return workouts;
+
+        }
         
-        ///Jala todos los workouts
-        let workouts = DB.workouts;
 
         if (filterParams.mode){
             return DB.workouts.filter((workout) => 
@@ -41,6 +92,10 @@ const getAllWorkouts = (filterParams) => {
             }
             return awnser;
         }
+
+        ///Jala todos los workouts
+        let workouts = DB.workouts;
+
         return workouts;
 
     }catch(error){
