@@ -10,11 +10,13 @@ const getAllWorkouts = (filterParams) => {
             const start = (filterParams.page -1) * limit;
             
             for (let i = start; i < (start+limit); i++ ){
-                workouts.push(DB.workouts[i]);    
+                if(DB.workouts[i]){
+                    workouts.push(DB.workouts[i]);
+                }else{
+                    return workouts;    
+                }
             }
-            
             return workouts;
-            
         }
 
         
